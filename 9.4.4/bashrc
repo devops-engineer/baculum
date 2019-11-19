@@ -1,0 +1,3 @@
+alias ll='ls -ltra'
+export PS1='\033[32mDOCKER\033[0m \u@\h:\w$ '
+export export TZ="America/New_York"
