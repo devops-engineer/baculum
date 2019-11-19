@@ -3,7 +3,7 @@ FROM debian:stretch
 RUN apt-get update && apt-get -y install gnupg2 apt-transport-https \
 	&& apt-key adv --fetch-keys http://bacula.org/downloads/baculum/baculum.pub
 
-COPY baculum.list /etc/apt/sources.list.d/baculum.list
+COPY 9.4.4/baculum.list /etc/apt/sources.list.d/baculum.list
 
 RUN apt-get update \
 	&& apt-get -y install wget dnsutils net-tools curl netcat baculum-common \
@@ -14,6 +14,6 @@ RUN apt-get update \
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq bacula-server bacula-client vim 
 
-COPY bashrc /root/.bashrc
+COPY 9.4.4/bashrc /root/.bashrc
 
 CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]
