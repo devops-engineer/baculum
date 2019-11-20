@@ -26,11 +26,24 @@
 ```
 ## Export/save image to a tar file
 ```
-    docker save -o baculum.18nov2019.1.tar 
+		~/github/baculum (master) $ docker image ls
+			REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+			baculum             18nov2019.1         c2bacebd67ea        23 hours ago        350MB
+			debian              stretch             4f5edfdf153f        4 weeks ago         101MB
+		~/github/baculum (master) $ docker image save -o baculum.20nov2019.1.tar baculum:18nov2019.1
+
+		~/github/baculum (master) $ ll
+			total 730736
+			-rw-r--r--  1 robertrt  staff    18K Nov 19 07:38 LICENSE
+			drwxr-xr-x  7 robertrt  staff   224B Nov 19 07:39 9.4.4
+			-rw-r--r--  1 robertrt  staff   1.9K Nov 19 07:57 README.md
+			-rw-------  1 robertrt  staff   346M Nov 20 07:14 baculum.20nov2019.1.tar
+
 ```
 ## Load image from a tar file
 ```
-    docker load -i baculum.18nov2019.1.tar 
+		~/github/baculum (master) $ docker image load -i baculum.20nov2019.1.tar
+			Loaded image: baculum:18nov2019.1
 ```
 
 Deploy [Baculum Web GUI Tool](https://www.bacula.org/9.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html) on Apache/2.4.25, PHP 7.0.33-0+deb9u3
