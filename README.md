@@ -46,8 +46,6 @@
 			Loaded image: baculum:18nov2019.1
 ```
 
-Deploy [Baculum Web GUI Tool](https://www.bacula.org/9.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html) on Apache/2.4.25, PHP 7.0.33-0+deb9u3
-
 ### Environment variables
     BACULUM_USER    ; optional
     BACULUM_PASSWD  ; optional
@@ -71,8 +69,33 @@ docker run --rm -d \
 
 ### Initial Configuration
 
-* Go to  http://<host_ip>:9095/ and complete the wizard.
+* Go to  http://<host_ip>:9095/ and complete the wizard. Use BACULUM_USER & BACULUM_PASSWD to login.
 
 ## Similar/reference projects:
 * https://github.com/devops-engineer/docker-baculum
 * dockerhub.com - mishik182/baculum:latest
+* https://hub.docker.com/r/fametec/baculum [ https://github.com/fametec/bacula ]
+
+
+## Todo
+
+Upgrade baculula components on baculum image to latest release 9.4.4
+
+How to install? 
+
+doc link - https://blog.bacula.org/whitepapers/CommunityInstallationGuide.pdf
+
+Install on deb:
+
+```
+cd /tmp
+wget https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc
+apt-key add Bacula-4096-Distribution-Verification-key.asc
+rm Bacula-4096-Distribution-Verification-key.asc   
+# Bacula Community
+deb [arch=amd64] http://www.bacula.org/packages/@access-key@/debs/@bacula-version@ /@ubuntu-version@/amd64/   @ubuntu-version@ main
+```
+
+Official documentation:
+
+* Deploy [Baculum Web GUI Tool](https://www.bacula.org/9.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html) on Apache/2.4.25, PHP 7.0.33-0+deb9u3
