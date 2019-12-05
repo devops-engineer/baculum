@@ -1,0 +1,54 @@
+# Baculum 9.4.4 & Bacula 9.x.x - NOT working, yet
+
+FROM debian:stretch
+
+RUN apt-get update \
+	&& apt-get -y install  --fix-missing  gnupg2 apt-transport-https curl wget apt-utils \
+	&& apt-key adv --fetch-keys http://bacula.org/downloads/baculum/baculum.pub
+
+RUN cd /tmp \
+	&& wget https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc \
+	&& apt-key add Bacula-4096-Distribution-Verification-key.asc \
+	&& rm Bacula-4096-Distribution-Verification-key.asc
+
+
+COPY 9.4.4/baculum944.list /etc/apt/sources.list.d/
+RUN DEBIAN_FRONTEND=noninteractive apt-get --fix-missing & apt-get install -y bacula-common bacula-client bacula-director bacula-sd  bacula-console postgresql-client
+
+
+
+# RUN curl -k -o bacula-client_9.4.4-1_amd64.deb https://bacula.org/packages/5cee4d079821e/debs/9.4.4/stretch/amd64/dists/stretch/main/binary-amd64/bacula-client_9.4.4-1_amd64.deb \
+#  	&& curl -k -o bacula-common_9.4.4-1_amd64.deb https://bacula.org/packages/5cee4d079821e/debs/9.4.4/stretch/amd64/dists/stretch/main/binary-amd64/bacula-common_9.4.4-1_amd64.deb \
+#  	&& curl -k -o bacula-console_9.4.4-1_amd64.deb https://bacula.org/packages/5cee4d079821e/debs/9.4.4/stretch/amd64/dists/stretch/main/binary-amd64/bacula-console_9.4.4-1_amd64.deb \
+#  	&& curl -k -o bacula-postgresql_9.4.4-1_amd64.deb https://bacula.org/packages/5cee4d079821e/debs/9.4.4/stretch/amd64/dists/stretch/main/binary-amd64/bacula-postgresql_9.4.4-1_amd64.deb \
+# 	&& ls -al
+
+
+COPY 9.4.4/baculum.list /etc/apt/sources.list.d/baculum.list
+RUN DEBIAN_FRONTEND=noninteractive \
+		&& apt-get update \
+		&& apt-get -y install wget dnsutils net-tools curl netcat baculum-common \
+		baculum-api baculum-api-apache2 baculum-web baculum-web-apache2 \
+		postgresql-client vim \
+	&& a2enmod rewrite \
+	&& a2ensite baculum-api \
+	&& a2ensite baculum-web
+
+# COPY deb /var/cache/apt/archives/
+
+# RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+# 	&& apt-get install -y libssl libssl0.9.8 libssl0.9.7 libssl1.0.0 libssl  liblzo2-2  liblzo2 liblzo1
+
+# RUN	dpkg -i deb/bacula-common_9.4.4-1_amd64.deb && 	apt-get install -yq -f \
+# 	&& dpkg -i deb/bacula-client_9.4.4-1_amd64.deb && apt-get install -yq -f \
+# 	&& dpkg -i deb/bacula-console_9.4.4-1_amd64.deb && apt-get install -yq -f \
+# 	&& dpkg -i deb/bacula-postgresql_9.4.4-1_amd64.deb && apt-get install -yq -f
+
+# RUN DEBIAN_FRONTEND=noninteractive apt-get install -y bacula-common bacula-client bacula-server  bacula-console postgresql-client
+
+
+# RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq bacula-server bacula-client vim 
+
+COPY 9.4.4/bashrc /root/.bashrc
+
+CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]
